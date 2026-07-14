@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rozhodovací strom - Změna hesla</title>
+    <style>
+        /* Základní nastavení stránky z předchozích stromů */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; padding: 40px 20px; color: #2c3e50; display: flex; flex-direction: column; align-items: center; margin: 0; }
+        .timeline-container { width: 100%; max-width: 640px; }
+        .line { height: 24px; width: 2px; background-color: #dadddf; margin: 0 auto; }
+        .card { background-color: #ffffff; border-radius: 12px; padding: 24px; display: flex; align-items: flex-start; border: 1px solid #eaebec; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .icon-container { flex-shrink: 0; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 20px; }
+        .icon-container svg { width: 24px; height: 24px; }
+        .bg-icon-gray { background-color: #e9ecef; color: #5a6268; }
+        .bg-icon-yellow { background-color: #fdf5e6; color: #b8860b; }
+        .bg-icon-white { background-color: #ffffff; }
+        .bg-icon-blue { background-color: #ebf8ff; color: #3182ce; }
+        .text-green { color: #276749; }
+        .text-teal { color: #285e61; }
+        .text-red { color: #c53030; }
+        .content { flex-grow: 1; padding-top: 4px; }
+        .content h3 { margin: 0 0 6px 0; font-size: 17px; font-weight: 700; color: #1a202c; }
+        .content p { margin: 0 0 16px 0; font-size: 14.5px; color: #718096; line-height: 1.4; }
+        .tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+        .tag { padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 600; display: inline-block; text-transform: uppercase; }
+        .tag-green { background-color: #e6f4ea; color: #1e8e3e; }
+        .tag-yellow { background-color: #fef7e0; color: #b06000; }
+        .tag-red { background-color: #fce8e6; color: #c5221f; }
+        .card-success { background-color: #eef5ef; border-color: #cce0d2; align-items: center; padding: 20px 24px; }
+        .card-success h3 { color: #276749 !important; margin-bottom: 4px; }
+        .card-success p { margin-bottom: 0; }
+        .red-header { color: #c53030; font-weight: 700; font-size: 14px; margin: 30px 0 15px 0; display: flex; align-items: center; text-transform: uppercase; }
+        .red-header::before { content: ''; display: inline-block; width: 8px; height: 8px; background-color: #c53030; border-radius: 50%; margin-right: 12px; }
+        .card-action { background-color: #fff5f5; border-color: #fed7d7; padding: 18px 24px; margin-bottom: 12px; align-items: center; }
+        .card-action .icon-container { width: 44px; height: 44px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .card-action .content { padding-top: 0; }
+        .card-action h3 { font-size: 15px; margin-bottom: 4px; color: #2d3748; }
+        .card-action p { margin-bottom: 0; font-size: 14px; }
+        .card-rescue-new { background-color: #eff3f4; border: 2px dashed #cbd5e1; flex-direction: column; padding: 24px; margin-top: 25px; }
+        .rescue-header { display: flex; align-items: center; margin-bottom: 20px; }
+        .rescue-header .icon-container { width: 44px; height: 44px; }
+        .rescue-header h3 { color: #285e61 !important; font-size: 17px; margin-bottom: 4px; }
+        .rescue-header p { margin-bottom: 0; }
+        .rescue-list { display: flex; flex-direction: column; gap: 16px; }
+        .rescue-item { display: flex; align-items: flex-start; font-size: 14px; color: #4a5568; }
+        .rescue-item svg { width: 18px; height: 18px; margin-right: 12px; flex-shrink: 0; color: #4a5568; margin-top: 2px; }
+        .rescue-item strong { color: #2d3748; }
+        .card-context { background-color: #f8fafc; border-left: 4px solid #3182ce; padding: 20px 24px; margin-top: 30px; align-items: center; }
+    </style>
+</head>
+<body>
+
+<div class="timeline-container">
+    <div class="card" style="background-color: #f6f7f9;">
+        <div class="icon-container bg-icon-gray">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>Měním si heslo k důležitému účtu.</h3>
+            <p style="margin-bottom:0;">E-mail, cloud, grantový portál. Jdeš na to, aby ses chránil/a, tak to nepokazme.</p>
+        </div>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="card">
+        <div class="icon-container bg-icon-yellow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3 style="margin-bottom: 12px;">Máš v plánu použít heslo, které máš i jinde?</h3>
+            <p>I kdyby to byla jen malá změna (např. Heslo1 na Heslo2).</p>
+            <div class="tags">
+                <span class="tag tag-green">NE &rarr; skvělé, bude unikátní</span>
+                <span class="tag tag-red">ANO &rarr; ZASTAV SE! Extrémní riziko.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="card">
+        <div class="icon-container bg-icon-yellow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>Vymýšlíš něco jako "Léto2024!" nebo jméno psa?</h3>
+            <p>Základní slovo + rok + vykřičník je první věc, kterou útočníci zkouší.</p>
+            <div class="tags">
+                <span class="tag tag-green">NE &rarr; jdeme na to správně</span>
+                <span class="tag tag-red">ANO &rarr; stroje to uhodnou za vteřinu</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="card card-success">
+        <div class="icon-container bg-icon-white text-green">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>Zatím to vypadá dobře.</h3>
+            <p>Heslo máš jen jedno pro tento účet a není to oblíbené slovo. Teď to jen nastavíme chytře.</p>
+        </div>
+    </div>
+
+    <div class="red-header">NASTAV TO BEZPEČNĚ — 3 KROKY</div>
+
+    <div class="card card-action">
+        <div class="icon-container bg-icon-white text-red">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>1 &middot; Použij Správce hesel (Ideální cesta)</h3>
+            <p>Nech prohlížeč nebo aplikaci (např. Bitwarden, 1Password) vygenerovat dlouhou změť znaků. Nemusíš si ho vůbec pamatovat, prohlížeč ho vyplní za tebe.</p>
+        </div>
+    </div>
+
+    <div class="card card-action">
+        <div class="icon-container bg-icon-white text-red">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>2 &middot; Nebo vymysli "Heslovou frázi"</h3>
+            <p>Pokud si heslo <strong>musíš</strong> pamatovat, spoj 4 náhodná, nesouvisející slova. Třeba <i>Klobouk-Jahoda-Balkon-Zebra</i>. Délka je důležitější než složité znaky.</p>
+        </div>
+    </div>
+
+    <div class="card card-action">
+        <div class="icon-container bg-icon-white text-red">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>3 &middot; Hned zapni Dvoufázové ověření (2FA)</h3>
+            <p>Heslo samotné už dnes nestačí. Kdekoliv to jde, zapni potvrzování přes aplikaci v mobilu nebo SMS. I kdyby heslo uniklo, účet je chráněn.</p>
+        </div>
+    </div>
+
+    <div class="card card-rescue-new">
+        <div class="rescue-header">
+            <div class="icon-container bg-icon-white text-teal">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+            </div>
+            <div class="content">
+                <h3>Vymyslel/a jsem heslo a hned ho zapomněl/a!</h3>
+                <p>Hlavně se nevyblokuj z účtu:</p>
+            </div>
+        </div>
+        
+        <div class="rescue-list">
+            <div class="rescue-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                </svg>
+                <span><strong>Nezkoušej to desetkrát po sobě.</strong> Většina systémů po několika pokusech účet dočasně nebo trvale zamkne. Dej si pauzu.</span>
+            </div>
+            <div class="rescue-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span><strong>Použij funkci „Zapomenuté heslo“.</strong> Klikni na odkaz pro reset a nech si poslat obnovu na svůj sekundární e-mail nebo telefon.</span>
+            </div>
+            <div class="rescue-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span><strong>Požádej kolegu o pomoc.</strong> Pokud jde o interní e-mail (např. Google Workspace), řekni to kolegovi v týmu, který má administrátorská práva. Může ti poslat resetovací odkaz.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-context">
+        <div class="icon-container bg-icon-blue">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3 style="color: #2c5282;">Proč vadí jedno stejné heslo všude?</h3>
+            <p style="margin-bottom:0; color: #4a5568;">Útočník nehackuje servery vaší NGO. Koupí si databázi hesel z nějakého starého e-shopu nebo fóra, kam ses kdysi zaregistroval/a. Automatizovaný program pak toto staré heslo vyzkouší na tvůj firemní e-mail. Pokud máš stejné, útočník je uvnitř. Říká se tomu <i>Credential Stuffing</i>.</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

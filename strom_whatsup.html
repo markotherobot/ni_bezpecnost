@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rozhodovací strom - WhatsApp podvody</title>
+    <style>
+        /* Základní nastavení stránky */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+            padding: 40px 20px;
+            color: #2c3e50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+        }
+
+        .timeline-container {
+            width: 100%;
+            max-width: 640px;
+        }
+
+        /* Spojovací čára mezi bloky */
+        .line {
+            height: 24px;
+            width: 2px;
+            background-color: #dadddf;
+            margin: 0 auto;
+        }
+
+        /* Základní karta */
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            align-items: flex-start;
+            border: 1px solid #eaebec;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        /* Kontejner pro ikonu */
+        .icon-container {
+            flex-shrink: 0;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+        }
+        
+        .icon-container svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Barevné varianty ikon a karet */
+        .bg-icon-gray { background-color: #e9ecef; color: #5a6268; }
+        .bg-icon-yellow { background-color: #fdf5e6; color: #b8860b; }
+        .bg-icon-white { background-color: #ffffff; }
+        .bg-icon-blue { background-color: #ebf8ff; color: #3182ce; }
+        .bg-icon-whatsapp { background-color: #e6f4ea; color: #25D366; } /* WhatsApp zelená */
+        
+        .text-green { color: #276749; }
+        .text-blue { color: #5a67d8; }
+        .text-teal { color: #285e61; }
+        .text-red { color: #c53030; }
+
+        .content {
+            flex-grow: 1;
+            padding-top: 4px;
+        }
+
+        .content h3 {
+            margin: 0 0 6px 0;
+            font-size: 17px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .content p {
+            margin: 0 0 16px 0;
+            font-size: 14.5px;
+            color: #718096;
+            line-height: 1.4;
+        }
+
+        /* Rozhodovací štítky */
+        .tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+
+        .tag {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12.5px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .tag-green { background-color: #e6f4ea; color: #1e8e3e; }
+        .tag-yellow { background-color: #fef7e0; color: #b06000; }
+        .tag-red { background-color: #fce8e6; color: #c5221f; }
+
+        /* Zelená karta v pořádku */
+        .card-success {
+            background-color: #eef5ef;
+            border-color: #cce0d2;
+            align-items: center;
+            padding: 20px 24px;
+        }
+        .card-success h3 {
+            color: #276749 !important;
+            margin-bottom: 4px;
+        }
+        .card-success p { margin-bottom: 0; }
+
+        /* Červený nadpis pro akční kroky */
+        .red-header {
+            color: #c53030;
+            font-weight: 700;
+            font-size: 14px;
+            margin: 30px 0 15px 0;
+            display: flex;
+            align-items: center;
+            text-transform: uppercase;
+        }
+        .red-header::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #c53030;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+
+        /* Světle červené akční karty */
+        .card-action {
+            background-color: #fff5f5;
+            border-color: #fed7d7;
+            padding: 18px 24px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        .card-action .icon-container {
+            width: 44px; height: 44px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .card-action .content { padding-top: 0; }
+        .card-action h3 { font-size: 15px; margin-bottom: 4px; color: #2d3748; }
+        .card-action p { margin-bottom: 0; font-size: 14px; }
+
+        /* Záchranná spodní karta */
+        .card-rescue-new {
+            background-color: #eff3f4;
+            border: 2px dashed #cbd5e1;
+            flex-direction: column;
+            padding: 24px;
+            margin-top: 25px;
+        }
+        .rescue-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .rescue-header .icon-container {
+            width: 44px; height: 44px;
+        }
+        .rescue-header h3 {
+            color: #285e61 !important;
+            font-size: 17px;
+            margin-bottom: 4px;
+        }
+        .rescue-header p { margin-bottom: 0; }
+        
+        .rescue-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .rescue-item {
+            display: flex;
+            align-items: flex-start;
+            font-size: 14px;
+            color: #4a5568;
+        }
+        .rescue-item svg {
+            width: 18px; height: 18px;
+            margin-right: 12px;
+            flex-shrink: 0;
+            color: #4a5568;
+            margin-top: 2px;
+        }
+        .rescue-item strong { color: #2d3748; }
+
+        /* Karta pro kontext NÚKIB */
+        .card-context {
+            background-color: #f8fafc;
+            border-left: 4px solid #3182ce;
+            padding: 20px 24px;
+            margin-top: 30px;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="timeline-container">
+
+    <div class="card" style="background-color: #f6f7f9;">
+        <div class="icon-container bg-icon-whatsapp">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12.031 0C5.385 0 0 5.388 0 12.033c0 2.122.553 4.195 1.605 6.012L.15 24l6.103-1.602a11.96 11.96 0 005.778 1.488h.004c6.645 0 12.031-5.387 12.031-12.033C24.066 5.389 18.676 0 12.031 0zm0 21.879a9.921 9.921 0 01-5.074-1.39l-.364-.216-3.77.99.998-3.676-.237-.376a9.92 9.92 0 01-1.523-5.333c0-5.485 4.465-9.95 9.95-9.95s9.95 4.465 9.95 9.95-4.465 9.95-9.95 9.95zm5.459-7.447c-.299-.15-1.771-.875-2.045-.975-.274-.101-.474-.15-.674.15-.2.3-.774.975-.949 1.176-.175.2-.35.225-.65.075-.299-.15-1.264-.466-2.408-1.487-.887-.795-1.486-1.776-1.66-2.076-.175-.3-.019-.462.13-.611.135-.135.299-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.674-1.626-.924-2.226-.244-.585-.49-.505-.674-.515-.175-.01-.375-.01-.575-.01-.2 0-.524.075-.8.375-.275.3-1.049 1.026-1.049 2.501 0 1.476 1.074 2.902 1.224 3.102.15.2 2.115 3.226 5.124 4.527.716.31 1.275.495 1.71.635.719.229 1.374.196 1.892.119.58-.086 1.771-.726 2.021-1.426.25-.7.25-1.301.175-1.426-.075-.125-.275-.2-.575-.35z"/>
+            </svg>
+        </div>
+        <div class="content">
+            <h3>Přišla mi zpráva na WhatsApp a něco nesedí.</h3>
+            <p style="margin-bottom:0;">Na chatu věříme lidem mnohem víc než e-mailu. O to je to nebezpečnější. Nadechni se.</p>
+        </div>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="card">
+        <div class="icon-container bg-icon-yellow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3 style="margin-bottom: 12px;">Píše mi kolega či známý, ale chová se divně?</h3>
+            <p>Používá jiná slova, tyká místo vykání, nebo zničehonic posílá odkaz.</p>
+            <div class="tags">
+                <span class="tag tag-yellow">NE &rarr; cizí číslo, pokračuj</span>
+                <span class="tag tag-red">ANO &rarr; pozor, jeho účet může být ukradený</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="card">
+        <div class="icon-container bg-icon-yellow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>Chce po mně šestimístný kód který mi přišel po WhatsAppu?</h3>
+            <p>„Omylem jsem ti poslal svůj kód, pošleš mi ho zpět?“</p>
+            <div class="tags">
+                <span class="tag tag-green">NE &rarr; pokračuj</span>
+                <span class="tag tag-red">ANO &rarr; KRAJNÍ NOUZE! Někdo ti právě krade účet.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="card">
+        <div class="icon-container bg-icon-yellow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>Žádá mě "šéf" z nového čísla o platbu?</h3>
+            <p>„Mám nové číslo, jsem na schůzce. Zaplať obratem tuto fakturu/kup poukázky.“</p>
+            <div class="tags">
+                <span class="tag tag-green">NE &rarr; asi v pořádku</span>
+                <span class="tag tag-red">ANO &rarr; jde o podvodníka, červené kroky</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="card card-success">
+        <div class="icon-container bg-icon-white text-green">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>Zatím to vypadá v pořádku.</h3>
+            <p>Pokud ti ale intuice stále hlásí, že něco nehraje, nic neposílej a dál to prověř.</p>
+        </div>
+    </div>
+
+    <div class="red-header">
+        KDYŽ COKOLIV NESEDÍ — UDĚLEJ 3 KROKY
+    </div>
+
+    <div class="card card-action">
+        <div class="icon-container bg-icon-white text-red">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>1 &middot; Nepřeposílej absolutně žádné kódy</h3>
+            <p>Jakýkoliv kód, co ti přijde, je klíč k TVÉMU účtu. Nikomu ho nedávej.</p>
+        </div>
+    </div>
+
+    <div class="card card-action">
+        <div class="icon-container bg-icon-white text-red">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>2 &middot; Ověř si identitu běžným hovorem</h3>
+            <p>Zavolej kolegovi nebo šéfovi klasicky přes mobilní síť (na číslo, které už znáš). Přes WhatsApp nevolej.</p>
+        </div>
+    </div>
+
+    <div class="card card-action">
+        <div class="icon-container bg-icon-white text-red">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>3 &middot; Číslo zablokuj a varuj ostatní</h3>
+            <p>Pokud zjistíš podvod, napiš do chatu týmu. Útočník pravděpodobně zkouší obehrát i další kolegy.</p>
+        </div>
+    </div>
+
+    <div class="card card-rescue-new">
+        <div class="rescue-header">
+            <div class="icon-container bg-icon-white text-teal">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+            </div>
+            <div class="content">
+                <h3>Omylem jsem poslal/a SMS kód, který mi přišel od WhatsAppu</h3>
+                <p>Někdo ti právě ukradl WhatsApp. Musíš jednat okamžitě:</p>
+            </div>
+        </div>
+        
+        <div class="rescue-list">
+            <div class="rescue-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+                <span><strong>Hned se do WhatsAppu přihlas znovu.</strong> Zadej své telefonní číslo, nechej si poslat nový kód a zadej ho. Tím útočníka ze svého účtu okamžitě "vykopneš".</span>
+            </div>
+            <div class="rescue-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span><strong>Zavolej (klasickým hovorem) šéfovi a blízkým .</strong> Útočník z tvého ukradeného účtu ihned začne psát tvým kontaktům a prosit je o peníze. Varuj je, ať tě ignorují.</span>
+            </div>
+            <div class="rescue-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                </svg>
+                <span><strong>Jakmile jsi zpět, zapni "Dvoufázové ověření".</strong> Běž do Nastavení &rarr; Účet &rarr; Dvoufázové ověření. Nastavíš si osobní PIN. Kdo ho nezná, tvůj WhatsApp už neukradne.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-context">
+        <div class="icon-container bg-icon-blue">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3 style="color: #2c5282;">Proč útočí na WhatsApp v neziskovce?</h3>
+            <p style="margin-bottom:0; color: #4a5568;">Ukradený WhatsApp je pro útočníka zlatý důl. Získá historii konverzací, jména tvých kolegů, a co je nejhorší – tvou identitu. Když napíšeš dobrovolníkovi, že potřebuješ rychle proplatit jízdenku pro klienta v tísni, věří ti a zaplatí.</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

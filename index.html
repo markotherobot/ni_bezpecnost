@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS Rozcestník - NGO Bezpečnost</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8fafc; padding: 20px 15px; color: #2c3e50; display: flex; flex-direction: column; align-items: center; margin: 0; }
+        .timeline-container { width: 100%; max-width: 500px; }
+        .header-title { text-align: center; margin-bottom: 25px; padding-top: 10px; }
+        .header-title h1 { color: #1a202c; font-size: 24px; margin-bottom: 8px; font-weight: 800; line-height: 1.2; }
+        .header-title p { color: #718096; font-size: 15px; margin: 0; line-height: 1.4; }
+        .card-scenario { background-color: #ffffff; border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; border: 1px solid #eaebec; box-shadow: 0 4px 6px rgba(0,0,0,0.02); margin-bottom: 10px; cursor: pointer; text-decoration: none; color: inherit; -webkit-tap-highlight-color: transparent; }
+        .card-scenario:active { transform: scale(0.98); box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-color: #cbd5e1; }
+        .icon-container { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 14px; }
+        .icon-container svg { width: 20px; height: 20px; }
+        .bg-red { background-color: #fff5f5; color: #c53030; border: 1px solid #fed7d7; }
+        .bg-yellow { background-color: #fffff0; color: #b8860b; border: 1px solid #fef08a; }
+        .bg-blue { background-color: #ebf8ff; color: #3182ce; border: 1px solid #bee3f8; }
+        .bg-teal { background-color: #e6fffa; color: #285e61; border: 1px solid #b2f5ea; }
+        .bg-whatsapp { background-color: #e6f4ea; color: #25D366; border: 1px solid #bbf7d0; }
+        .content { flex-grow: 1; padding-right: 10px; }
+        .content h3 { margin: 0 0 2px 0; font-size: 15px; font-weight: 700; color: #2d3748; }
+        .content p { margin: 0; font-size: 13px; color: #718096; line-height: 1.3; }
+        .arrow { color: #cbd5e1; flex-shrink: 0; }
+        .arrow svg { width: 20px; height: 20px; }
+        .category-title { font-size: 12px; font-weight: 700; color: #a0aec0; text-transform: uppercase; letter-spacing: 1px; margin: 25px 0 10px 10px; }
+        .card-context { background-color: #ebf8ff; border-left: 4px solid #3182ce; padding: 16px; margin-top: 25px; align-items: center; border-radius: 0 12px 12px 0; }
+        .card-context h3 { color: #2c5282; margin: 0 0 4px 0; font-size: 15px; font-weight: 700; }
+        .card-context p { margin: 0; color: #4a5568; font-size: 13.5px; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+<div class="timeline-container">
+
+    <div class="header-title">
+        <h1>Něco se stalo?<br>Zvládneme to.</h1>
+        <p>Vyber situaci, která právě nastala. Rychlá reakce chrání náš tým i klienty.</p>
+    </div>
+
+    <!-- 1. KOMUNIKACE A NÁTLAK -->
+    <div class="category-title">Komunikace a Nátlak</div>
+    <a href="strom_mail_2.html" class="card-scenario">
+        <div class="icon-container bg-red"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg></div>
+        <div class="content"><h3>Podezřelý e-mail</h3><p>Odkaz, příloha, tlak na zaplacení.</p></div>
+        <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></div>
+    </a>
+    <a href="strom_telefon_2.html" class="card-scenario">
+        <div class="icon-container bg-yellow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg></div>
+        <div class="content"><h3>Podezřelý telefonát</h3><p>Banka/policie chce citlivé údaje či peníze.</p></div>
+        <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></div>
+    </a>
+    <a href="strom_sms_2.html" class="card-scenario">
+        <div class="icon-container bg-yellow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg></div>
+        <div class="content"><h3>Podezřelá SMS zpráva</h3><p>Falešná zpráva od pošty nebo úřadu.</p></div>
+        <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></div>
+    </a>
+    <a href="strom_whatsup.html" class="card-scenario">
+        <div class="icon-container bg-whatsapp"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.388 0 12.033c0 2.122.553 4.195 1.605 6.012L.15 24l6.103-1.602a11.96 11.96 0 005.778 1.488h.004c6.645 0 12.031-5.387 12.031-12.033C24.066 5.389 18.676 0 12.031 0zm0 21.879a9.921 9.921 0 01-5.074-1.39l-.364-.216-3.77.99.998-3.676-.237-.376a9.92 9.92 0 01-1.523-5.333c0-5.485 4.465-9.95 9.95-9.95s9.95 4.465 9.95 9.95-4.465 9.95-9.95 9.95z"/></svg></div>
+        <div class="content"><h3>Divný WhatsApp</h3><p>Žádost o kód nebo peníze od kolegy.</p></div>
+        <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></div>
+    </a>
+
+    <!-- 2. ZAŘÍZENÍ A SÍTĚ -->
+    <div class="category-title">Zařízení a Sítě</div>
+    <a href="strom_zarizeni.html" class="card-scenario">
+        <div class="icon-container bg-blue"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg></div>
+        <div class="content"><h3>Ztráta mobilu či notebooku</h3><p>Krádež nebo ztráta firemního zařízení.</p></div>
+        <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></div>
+    </a>
+    <a href="strom_ransomware.html" class="card-scenario">
+        <div class="icon-container bg-red"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg></div>
+        <div class="content"><h3>Červená obrazovka / Vir</h3><p>Nejdou otevřít soubory, vydírání.</p></div>
+        <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></div>
+    </a>
+    <a href="strom_wifi.html" class="card-scenario">
+        <div class="icon-container bg-blue"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" /></svg></div>
+        <div class="content"><h3>Připojení na veřejnou Wi-Fi</h3><p>Práce z kavárny nebo vlaku.</p></div>
+        <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></div>
+    </a>
+    <a href="strom_socialnet.html" class="card-scenario">
+        <div class="icon-container bg-teal"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg></div>
+        <div class="content"><h3>Hacknuté sociální sítě</h3><p>Ztráta účtu nebo cizí posty.</p></div>
+        <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></div>
+    </a>
+
+    <!-- 3. DATA, PŘÍSTUPY A CHYBY -->
+    <div class="category-title">Data a Přístupy</div>
+    <a href="strom_spatnymail.html" class="card-scenario">
+        <div class="icon-container bg-teal"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg></div>
+        <div class="content"><h3>E-mail nesprávné osobě</h3><p>Odeslání dat špatnému adresátovi.</p></div>
+        <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></div>
+    </a>
+    <a href="strom_data.html" class="card-scenario">
+        <div class="icon-container bg-teal"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg></div>
+        <div class="content"><h3>Sdílení dat a odkazů</h3><p>Jak bezpečně sdílet Google dokumenty.</p></div>
+        <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></div>
+    </a>
+    <a href="strom_sdilenihesla.html" class="card-scenario">
+        <div class="icon-container bg-yellow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg></div>
+        <div class="content"><h3>Máme společné heslo</h3><p>Tým sdílí jeden účet (Instagram apod.).</p></div>
+        <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></div>
+    </a>
+    <a href="strom_zmenahesla.html" class="card-scenario">
+        <div class="icon-container bg-blue"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" /></svg></div>
+        <div class="content"><h3>Měním si heslo</h3><p>Jak nastavit heslo a nenechat se hacknout.</p></div>
+        <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></div>
+    </a>
+    <a href="strom_odchod.html" class="card-scenario">
+        <div class="icon-container bg-red"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg></div>
+        <div class="content"><h3>Odchod člena týmu</h3><p>Kolega končí. Nutno odebrat práva.</p></div>
+        <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></div>
+    </a>
+    <a href="strom_shadowAI.html" class="card-scenario">
+        <div class="icon-container bg-blue"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg></div>
+        <div class="content"><h3>Nahrávání dat do AI</h3><p>ChatGPT, DeepL, převody PDF.</p></div>
+        <div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></div>
+    </a>
+
+    <div class="card-context">
+        <h3>Jsme v tom společně</h3>
+        <p>Nebudeme nikoho trestat. Neboj se ozvat.</p>
+    </div>
+
+</div>
+
+</body>
+</html>

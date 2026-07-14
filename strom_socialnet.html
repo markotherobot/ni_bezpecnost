@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rozhodovací strom - Sociální sítě</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; padding: 40px 20px; color: #2c3e50; display: flex; flex-direction: column; align-items: center; margin: 0; }
+        .timeline-container { width: 100%; max-width: 640px; }
+        .line { height: 24px; width: 2px; background-color: #dadddf; margin: 0 auto; }
+        .card { background-color: #ffffff; border-radius: 12px; padding: 24px; display: flex; align-items: flex-start; border: 1px solid #eaebec; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .icon-container { flex-shrink: 0; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 20px; }
+        .icon-container svg { width: 24px; height: 24px; }
+        .bg-icon-gray { background-color: #e9ecef; color: #5a6268; }
+        .bg-icon-yellow { background-color: #fdf5e6; color: #b8860b; }
+        .bg-icon-white { background-color: #ffffff; }
+        .bg-icon-blue { background-color: #ebf8ff; color: #3182ce; }
+        .text-green { color: #276749; }
+        .text-teal { color: #285e61; }
+        .text-red { color: #c53030; }
+        .content { flex-grow: 1; padding-top: 4px; }
+        .content h3 { margin: 0 0 6px 0; font-size: 17px; font-weight: 700; color: #1a202c; }
+        .content p { margin: 0 0 16px 0; font-size: 14.5px; color: #718096; line-height: 1.4; }
+        .tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+        .tag { padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 600; display: inline-block; }
+        .tag-green { background-color: #e6f4ea; color: #1e8e3e; }
+        .tag-yellow { background-color: #fef7e0; color: #b06000; }
+        .tag-red { background-color: #fce8e6; color: #c5221f; }
+        .card-success { background-color: #eef5ef; border-color: #cce0d2; align-items: center; padding: 20px 24px; }
+        .card-success h3 { color: #276749 !important; margin-bottom: 4px; }
+        .card-success p { margin-bottom: 0; }
+        .red-header { color: #c53030; font-weight: 700; font-size: 14px; margin: 30px 0 15px 0; display: flex; align-items: center; text-transform: uppercase; }
+        .red-header::before { content: ''; display: inline-block; width: 8px; height: 8px; background-color: #c53030; border-radius: 50%; margin-right: 12px; }
+        .card-action { background-color: #fff5f5; border-color: #fed7d7; padding: 18px 24px; margin-bottom: 12px; align-items: center; }
+        .card-action .icon-container { width: 44px; height: 44px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .card-action .content { padding-top: 0; }
+        .card-action h3 { font-size: 15px; margin-bottom: 4px; color: #2d3748; }
+        .card-action p { margin-bottom: 0; font-size: 14px; }
+        .card-rescue-new { background-color: #eff3f4; border: 2px dashed #cbd5e1; flex-direction: column; padding: 24px; margin-top: 25px; }
+        .rescue-header { display: flex; align-items: center; margin-bottom: 20px; }
+        .rescue-header .icon-container { width: 44px; height: 44px; }
+        .rescue-header h3 { color: #285e61 !important; font-size: 17px; margin-bottom: 4px; }
+        .rescue-header p { margin-bottom: 0; }
+        .rescue-list { display: flex; flex-direction: column; gap: 16px; }
+        .rescue-item { display: flex; align-items: flex-start; font-size: 14px; color: #4a5568; }
+        .rescue-item svg { width: 18px; height: 18px; margin-right: 12px; flex-shrink: 0; color: #4a5568; margin-top: 2px; }
+        .rescue-item strong { color: #2d3748; }
+        .card-context { background-color: #f8fafc; border-left: 4px solid #3182ce; padding: 20px 24px; margin-top: 30px; align-items: center; }
+    </style>
+</head>
+<body>
+
+<div class="timeline-container">
+    <div class="card" style="background-color: #f6f7f9;">
+        <div class="icon-container bg-icon-gray">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>Ztratili jsme přístup na firemní sítě, nebo tam visí cizí post.</h3>
+            <p style="margin-bottom:0;">Panika nepomůže. Zjistíme, jestli je to chyba Facebooku, nebo útok.</p>
+        </div>
+    </div>
+    <div class="line"></div>
+    <div class="card">
+        <div class="icon-container bg-icon-yellow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3 style="margin-bottom: 12px;">Nemůžeš se vůbec přihlásit?</h3>
+            <p>Heslo nefunguje, i když víš, že je správné.</p>
+            <div class="tags">
+                <span class="tag tag-yellow">NE &rarr; zkus to za 10 min (výpadek)</span>
+                <span class="tag tag-red">ANO &rarr; útočník ho změnil</span>
+            </div>
+        </div>
+    </div>
+    <div class="line"></div>
+    <div class="card">
+        <div class="icon-container bg-icon-yellow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>Visí na naší zdi posty o kryptoměnách nebo falešné sbírce?</h3>
+            <p>Často označují desítky dalších stránek najednou.</p>
+            <div class="tags">
+                <span class="tag tag-green">NE &rarr; ještě dobré</span>
+                <span class="tag tag-red">ANO &rarr; okamžitá hrozba pro dárce</span>
+            </div>
+        </div>
+    </div>
+    <div class="red-header">POKUD ÚČET NEKONTROLUJEME — 3 KROKY</div>
+    <div class="card card-action">
+        <div class="icon-container bg-icon-white text-red">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>1 &middot; Aktivuj tým přes chat</h3>
+            <p>Napiš: „Máme hacknutý Facebook.“ Zjisti od zbylých 3 kolegů, jestli někomu z nich náhodou nezůstal administrátorský přístup.</p>
+        </div>
+    </div>
+    <div class="card card-action">
+        <div class="icon-container bg-icon-white text-red">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>2 &middot; Varuj dárce jiným kanálem</h3>
+            <p>Dejte na webovou stránku NGO varování. Pošlete rychlý e-mail z databáze: „Náš účet byl odcizen, na nic neklikejte.“</p>
+        </div>
+    </div>
+    <div class="card card-action">
+        <div class="icon-container bg-icon-white text-red">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>3 &middot; Zablokuj platební karty v bance</h3>
+            <p>Pokud máte u Facebooku spárovanou kartu pro reklamy, ihned ji v bankovnictví trvale zablokujte.</p>
+        </div>
+    </div>
+    <div class="card card-rescue-new">
+        <div class="rescue-header">
+            <div class="icon-container bg-icon-white text-teal">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+            </div>
+            <div class="content">
+                <h3>Jak spustit obnovu účtu</h3>
+                <p>Někdo musí zahájit byrokratický proces s provozovatelem:</p>
+            </div>
+        </div>
+        <div class="rescue-list">
+            <div class="rescue-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+                </svg>
+                <span><strong>Jdi na oficiální odkaz:</strong> facebook.com/hacked a Instagram nápovědu. Přesně následuj jejich kroky, jiná cesta není.</span>
+            </div>
+            <div class="rescue-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span><strong>Zabezpečte hlavní e-mail NGO.</strong> Pokud se útočník dostal k Facebooku, možná ukradl i heslo od e-mailu vaší organizace. Změňte ho.</span>
+            </div>
+        </div>
+    </div>
+    <div class="card card-context">
+        <div class="icon-container bg-icon-blue">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3 style="color: #2c5282;">Proč kradou zrovna profily NGO?</h3>
+            <p style="margin-bottom:0; color: #4a5568;">Sociální sítě neziskovek mají u svých sledujících obrovskou důvěru. Útočníci nechtějí škodit vám, chtějí zneužít vaši reputaci, aby oklamali vaše dárce (např. přes falešné zprávy o neštěstí a sbírky).</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

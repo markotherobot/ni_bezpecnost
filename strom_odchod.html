@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Rozhodovací strom - Odchod člověka z týmu</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffffff; padding: 40px 20px; color: #2c3e50; display: flex; flex-direction: column; align-items: center; margin: 0; }
+        .timeline-container { width: 100%; max-width: 640px; }
+        .line { height: 24px; width: 2px; background-color: #dadddf; margin: 0 auto; }
+        .card { background-color: #ffffff; border-radius: 12px; padding: 24px; display: flex; align-items: flex-start; border: 1px solid #eaebec; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .icon-container { flex-shrink: 0; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 20px; }
+        .icon-container svg { width: 24px; height: 24px; }
+        .bg-icon-gray { background-color: #e9ecef; color: #5a6268; }
+        .bg-icon-yellow { background-color: #fdf5e6; color: #b8860b; }
+        .bg-icon-white { background-color: #ffffff; }
+        .bg-icon-blue { background-color: #ebf8ff; color: #3182ce; }
+        .text-green { color: #276749; }
+        .text-teal { color: #285e61; }
+        .text-red { color: #c53030; }
+        .content { flex-grow: 1; padding-top: 4px; }
+        .content h3 { margin: 0 0 6px 0; font-size: 17px; font-weight: 700; color: #1a202c; }
+        .content p { margin: 0 0 16px 0; font-size: 14.5px; color: #718096; line-height: 1.4; }
+        .tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+        .tag { padding: 6px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 600; display: inline-block; }
+        .tag-green { background-color: #e6f4ea; color: #1e8e3e; }
+        .tag-yellow { background-color: #fef7e0; color: #b06000; }
+        .tag-red { background-color: #fce8e6; color: #c5221f; }
+        .card-success { background-color: #eef5ef; border-color: #cce0d2; align-items: center; padding: 20px 24px; }
+        .card-success h3 { color: #276749 !important; margin-bottom: 4px; }
+        .card-success p { margin-bottom: 0; }
+        .red-header { color: #c53030; font-weight: 700; font-size: 14px; margin: 30px 0 15px 0; display: flex; align-items: center; text-transform: uppercase; }
+        .red-header::before { content: ''; display: inline-block; width: 8px; height: 8px; background-color: #c53030; border-radius: 50%; margin-right: 12px; }
+        .card-action { background-color: #fff5f5; border-color: #fed7d7; padding: 18px 24px; margin-bottom: 12px; align-items: center; }
+        .card-action .icon-container { width: 44px; height: 44px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .card-action .content { padding-top: 0; }
+        .card-action h3 { font-size: 15px; margin-bottom: 4px; color: #2d3748; }
+        .card-action p { margin-bottom: 0; font-size: 14px; }
+        .card-rescue-new { background-color: #eff3f4; border: 2px dashed #cbd5e1; flex-direction: column; padding: 24px; margin-top: 25px; }
+        .rescue-header { display: flex; align-items: center; margin-bottom: 20px; }
+        .rescue-header .icon-container { width: 44px; height: 44px; }
+        .rescue-header h3 { color: #285e61 !important; font-size: 17px; margin-bottom: 4px; }
+        .rescue-header p { margin-bottom: 0; }
+        .rescue-list { display: flex; flex-direction: column; gap: 16px; }
+        .rescue-item { display: flex; align-items: flex-start; font-size: 14px; color: #4a5568; }
+        .rescue-item svg { width: 18px; height: 18px; margin-right: 12px; flex-shrink: 0; color: #4a5568; margin-top: 2px; }
+        .rescue-item strong { color: #2d3748; }
+        .card-context { background-color: #f8fafc; border-left: 4px solid #3182ce; padding: 20px 24px; margin-top: 30px; align-items: center; }
+    </style>
+</head>
+<body>
+<div class="timeline-container">
+    <div class="card" style="background-color: #f6f7f9;">
+        <div class="icon-container bg-icon-gray">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>Odchází nám kolega nebo končí dobrovolník.</h3>
+            <p style="margin-bottom:0;">Rozešli jsme se v dobrém, ale digitální stopu musíme uzavřít okamžitě.</p>
+        </div>
+    </div>
+    <div class="line"></div>
+    <div class="card">
+        <div class="icon-container bg-icon-yellow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3 style="margin-bottom: 12px;">Má přístup ke klientským datům nebo na sítě?</h3>
+            <div class="tags">
+                <span class="tag tag-yellow">MĚL JEN E-MAIL &rarr; i to je riziko</span>
+                <span class="tag tag-red">ANO, MÁ DRIVE / SÍTĚ &rarr; musíme jednat</span>
+            </div>
+        </div>
+    </div>
+    <div class="red-header">UZAVŘI PŘÍSTUPY — UDĚLEJ TYTO 3 KROKY</div>
+    <div class="card card-action">
+        <div class="icon-container bg-icon-white text-red">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>1 &middot; Zablokuj firemní e-mail / Workspace</h3>
+            <p>Nemusíš účet hned mazat (kvůli historii), ale změň mu heslo a odhlas všechna jeho zařízení.</p>
+        </div>
+    </div>
+    <div class="card card-action">
+        <div class="icon-container bg-icon-white text-red">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>2 &middot; Změňte společná hesla</h3>
+            <p>Pokud znal heslo na společný Facebook, Instagram nebo do účetnictví, okamžitě tato hesla změňte pro zbytek týmu.</p>
+        </div>
+    </div>
+    <div class="card card-action">
+        <div class="icon-container bg-icon-white text-red">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3>3 &middot; Vyhoď ho ze sdílených složek</h3>
+            <p>Projdi hlavní sdílené složky na Disku/Canvě a odeber mu práva. Pokud byl vlastníkem souborů, převeď vlastnictví na sebe.</p>
+        </div>
+    </div>
+    <div class="card card-context">
+        <div class="icon-container bg-icon-blue">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+        <div class="content">
+            <h3 style="color: #2c5282;">Proč to nesnese odklad?</h3>
+            <p style="margin-bottom:0; color: #4a5568;">Bývalý kolega nemusí mít zlé úmysly. Ale pokud jeho soukromý mobil někdo ukradne a on tam má stále přihlášený váš NGO Disk, útočník má otevřené dveře k datům vašich klientů[cite: 1].</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
