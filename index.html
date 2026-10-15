@@ -8,7 +8,8 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8fafc; padding: 20px 15px; color: #2c3e50; display: flex; flex-direction: column; align-items: center; margin: 0; }
         .timeline-container { width: 100%; max-width: 500px; }
         .header-title { text-align: center; margin-bottom: 25px; padding-top: 10px; }
-        .header-title h1 { color: #1a202c; font-size: 24px; margin-bottom: 8px; font-weight: 800; line-height: 1.2; }
+        .header-title h1 { color: #1a202c; font-size: 24px; margin-bottom: 20px; font-weight: 800; line-height: 1.2; }
+        .header-title .header-label { color: #a0aec0; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
         .header-title p { color: #718096; font-size: 15px; margin: 0; line-height: 1.4; }
         .card-scenario { background-color: #ffffff; border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; border: 1px solid #eaebec; box-shadow: 0 4px 6px rgba(0,0,0,0.02); margin-bottom: 10px; cursor: pointer; text-decoration: none; color: inherit; -webkit-tap-highlight-color: transparent; }
         .card-scenario:active { transform: scale(0.98); box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-color: #cbd5e1; }
@@ -25,7 +26,7 @@
         .arrow { color: #cbd5e1; flex-shrink: 0; }
         .arrow svg { width: 20px; height: 20px; }
         .category-title { font-size: 12px; font-weight: 700; color: #a0aec0; text-transform: uppercase; letter-spacing: 1px; margin: 25px 0 10px 10px; }
-        .card-context { background-color: #ebf8ff; border-left: 4px solid #3182ce; padding: 16px; margin-top: 25px; align-items: center; border-radius: 0 12px 12px 0; }
+        .card-context { background-color: #ebf8ff; border-left: 0px solid #3182ce; padding: 16px; margin-top: 25px; align-items: center; border-radius: 0 12px 12px 0; }
         .card-context h3 { color: #2c5282; margin: 0 0 4px 0; font-size: 15px; font-weight: 700; }
         .card-context p { margin: 0; color: #4a5568; font-size: 13.5px; line-height: 1.4; }
     </style>
@@ -35,8 +36,11 @@
 <div class="timeline-container">
 
     <div class="header-title">
+        <div class="header-label">Kybernetická bezpečnost pro malé neziskové organizace</div>
         <h1>Něco se stalo?<br>Zvládneme to.</h1>
-        <p>Vyber situaci, která právě nastala. Rychlá reakce chrání náš tým i klienty.</p>
+        <p>Vyber situaci, která právě nastala.</p>
+        <p>Rychlá reakce chrání náš tým i klienty.</p>
+        <p>Jsme v tom společně. Neboj se ozvat.</p>
     </div>
 
     <!-- 1. KOMUNIKACE A NÁTLAK -->
@@ -119,11 +123,11 @@
     </a>
 
     <div class="card-context">
-        <h3>Jsme v tom společně</h3>
-        <p>Nebudeme nikoho trestat. Neboj se ozvat.</p>
+        <h3>O projektu</h3>
+        <p>Rozcestník vznikl pro <a href="https://novinarskyinkubator.cz/">Novinářský inkubátor</a> v rámci projektu  <a href="https://css.muni.cz/">Czech Cybersecurity Seminars</a> Masarykovy univerzity ve spolupráci s Google (2025–2026), který propojuje univerzitu s komunitami prostřednictvím osvěty v kyberbezpečnosti a připravuje studentské ambasadory na práci s malými podniky a neziskovkami. Intervenci vytvořila  <a href="https://markotherobot.github.io/" >Markéta Svitáková</a>. <a href="https://forms.gle/xmW9wzUAZzLQ5y287">Dejte jí vědět, co si o rozcestníku myslíte.  </a></p>
     </div>
 
 </div>
 
-</body>
+<script src="podpis.js"></script></body>
 </html>

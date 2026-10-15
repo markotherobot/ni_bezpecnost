@@ -3,17 +3,15 @@
    <script src="/ni_bezpecnost/podpis.js"></script>
    Text, odkaz a barvy se mění jen tady. */
 (function () {
-  var TEXT = 'Navrhla Markéta Sviták/ová';
+  var TEXT = 'navrženo m';
   var URL = 'https://markotherobot.github.io';
 
   var css =
-    '.mk-podpis{position:fixed;right:12px;bottom:12px;z-index:9999;' +
-    'font:700 13px/1.3 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;' +
-    'background:rgba(255,255,255,.94);border:2px solid #5a2d91;border-radius:999px;' +
-    'padding:6px 14px;box-shadow:0 2px 8px rgba(0,0,0,.12)}' +
-    '.mk-podpis a{color:#5a2d91;text-decoration:underline;text-decoration-color:#2e9e6a;' +
-    'text-decoration-thickness:2px;text-underline-offset:3px}' +
-    '.mk-podpis a:hover{color:#2e9e6a}' +
+    '.mk-podpis{margin:24px 0 8px;text-align:center;' +
+    'font:500 12px/1.4 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}' +
+    '.mk-podpis a{color:#4a5568;text-decoration:underline;text-decoration-color:#2e9e6a;' +
+    'text-decoration-thickness:1px;text-underline-offset:2px}' +
+    '.mk-podpis a:hover{color:#3182ce}' +
     '@media print{.mk-podpis{display:none}}';
 
   var style = document.createElement('style');
@@ -26,5 +24,13 @@
   link.href = URL;
   link.textContent = TEXT;
   box.appendChild(link);
-  document.body.appendChild(box);
+
+  var blocks = document.querySelectorAll('.card-context');
+  if (blocks.length) {
+    var last = blocks[blocks.length - 1];
+    last.parentNode.insertBefore(box, last.nextSibling);
+  } else {
+    var container = document.querySelector('.timeline-container');
+    (container || document.body).appendChild(box);
+  }
 })();
